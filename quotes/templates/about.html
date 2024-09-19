@@ -4,13 +4,20 @@
         <title>
             Yu Hua
         </title>
-
+        <link rel="stylesheet" href="/static/styles.css">
     </head>
 
     <body>
         
         <h1> Yu Hua</h1>
-
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'quote' %}">Random Quote</a></li>
+                <li><a href="{% url 'show_all' %}">All Quotes</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ul>
+        </nav>
         <p>
             Yu Hua is a renowned Chinese author known for his contributions to contemporary Chinese literature. Born in 1960 in Hangzhou, Zhejiang Province, Yu Hua initially trained as a dentist before shifting to writing in the 1980s. His works often explore themes of individual suffering, social upheaval, and the tumultuous changes in China, especially during the Cultural Revolution and its aftermath.
 
