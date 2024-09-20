@@ -24,7 +24,7 @@ def quote(request):
     Delegate rendering to the template quotes/templates/quote.html.
     '''
 
-    template_name = 'quote.html'
+    template_name = 'quotes/quote.html'
     #create a dictionary of context varibales for the template:
     context = {
         "rand_images" : random.choice(images),
@@ -38,7 +38,7 @@ def about(request):
     Delegate rendering to the template quotes/templates/quote.html.
     '''
 
-    template_name = 'about.html'
+    template_name = 'quotes/about.html'
     #create a dictionary of context varibales for the template:
     context = {
         "rand_images" : random.choice(images),
@@ -52,7 +52,7 @@ def show_all(request):
     Delegate rendering to the template quotes/templates/quote.html.
     '''
 
-    template_name = 'show_all.html'
+    template_name = 'quotes/show_all.html'
     #create a dictionary of context varibales for the template:
     context = {
         "images_0" : images[0],
@@ -70,7 +70,7 @@ def base(request):
     Delegate rendering to the template quotes/templates/quote.html.
     '''
 
-    template_name = 'base.html'
+    template_name = 'quotes/base.html'
     #create a dictionary of context varibales for the template:
     context = {
         "rand_images" : random.choice(images),
@@ -84,7 +84,7 @@ def home(request):
     Delegate rendering to the template quotes/templates/quote.html.
     '''
 
-    template_name = 'home.html'
+    template_name = 'quotes/home.html'
     #create a dictionary of context varibales for the template:
     context = {
         "rand_images" : random.choice(images),
