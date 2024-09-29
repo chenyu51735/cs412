@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("hw/", include("hw.urls")), ## create the URL hw/
                                      ## and associate it with URLS in another file
+                                
     path("quotes/", include("quotes.urls")),
+    path("restaurant/", include("restaurant.urls")),
 ] + static(settings.STATIC_URL,
            document_root=settings.STATIC_ROOT)
