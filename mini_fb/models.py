@@ -10,5 +10,5 @@ class Profile(models.Model):
     image_url = models.URLField(blank=True)
 
 
-    def _str_(self):
-        return f'{self.last_name} by {self.email}'
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
