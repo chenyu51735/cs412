@@ -1,0 +1,28 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h1>Show all Profiles</h1>
+
+<main class = "grid-container">
+    <article class="featured">
+        <img src="{{profile.image_url}}" alt="{{profile.image_url}}">
+    <div>
+        <h2>{{profile.first_name}}</h2>
+        <h2>{{profile.last_name}}</h2>
+        <h2>{{profile.email}}</h2>
+        <h2>{{profile.city}}</h2>
+    </div>
+</article>
+<div>
+    <h2>Status Message</h2>
+    {% for m in profile.get_status_messages %}
+    <div>
+        <strong>by {{m.timestamp}}</strong>
+        <p>
+            {{m.message}}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+</main>
+{% endblock %}

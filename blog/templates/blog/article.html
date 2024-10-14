@@ -12,7 +12,10 @@
         <h3>by {{article.author}} at {{article.published}}</h3>
         <p>
             {{article.text}}
-        </p>
+        </p> 
+        <h4>
+            <a href="{% url 'create_comment' article.pk %}">Create a Comment</a>
+        </h4>
     </div>
 </article>
 
