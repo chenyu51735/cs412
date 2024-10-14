@@ -1,0 +1,33 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>Create Profile</h2>
+
+<form method="POST">
+    {% csrf_token %}
+        <div>
+            <label id="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name">
+        </div>
+        <div>
+            <label id="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name">
+        </div>
+        <div>
+            <label id="city">City:</label>
+            <input type="text" id="city" name="city">
+        </div>
+        <div>
+            <label id="email">Email:</label>
+            <input type="text" id="email" name="email">
+        </div>
+        <div>
+            <label id="image_url">Image URL:</label>
+            <input type="text" id="image_url" name="image_url">
+        </div>
+        <button type="submit">Create Profile!</button>
+</form>   
+<form action="{% url 'show_all_profiles'%}">
+    <input type="submit" name="Cancel" value="Cancel">
+</form>
+{% endblock %}

@@ -21,7 +21,9 @@ h2 {
     margin-top: 20px;
     color: #444;
 }
-
+nav li {
+    display: inline;
+}
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
