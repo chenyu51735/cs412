@@ -28,7 +28,8 @@ class CreateStatusMessageView(CreateView):
     '''the view to create status message'''
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
-
+    context_object_name = 'status'
+    
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(pk=self.kwargs['pk'])

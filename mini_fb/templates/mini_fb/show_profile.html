@@ -24,6 +24,9 @@
         <p>
             {{m.message}}
         </p>
+        {% for img in m.get_images %}
+            <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
+        {% endfor %}
     </div>
     {% endfor %}
 </div>
