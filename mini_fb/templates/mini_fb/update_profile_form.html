@@ -1,0 +1,25 @@
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>Update profile for {{profile.first_name}} {{profile.last_name}}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <label id="city">City: </label>
+        {{ form.city }}
+    </div>
+    <div>
+        <label id="email">Email: </label>
+        {{ form.email }}
+    </div>
+    <div>
+        <label id="image_url">Image URL: </label>
+        {{ form.image_url }}
+    </div>
+    <button type="submit">Update</button>
+</form>   
+<form action="{% url 'profile' profile.pk %}">
+    <input type="submit" name="Cancel" value="Cancel">
+</form>
+{% endblock %}

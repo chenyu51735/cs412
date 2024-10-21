@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # Create your views here.
 from django.views.generic import ListView
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 from .models import *
 from .forms import *
 from typing import Any
@@ -63,3 +63,9 @@ class CreateStatusMessageView(CreateView):
 
         profile = Profile.objects.get(pk=self.kwargs['pk'])
         return reverse('show_profile', kwargs={'pk':profile.pk})
+
+
+class UpdateProfileView(UpdateView):
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = 'mini_fb/update_profile_form.html'
