@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # Create your views here.
 from django.views.generic import ListView
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
 from typing import Any
@@ -52,8 +52,8 @@ class CreateStatusMessageView(CreateView):
             image = Image(
             image_file=file,
             status_message=sm
-        )
-        image.save()
+            )
+            image.save()
         # delegate work to superclass version of this method
 
         return super().form_valid(form)
@@ -62,10 +62,18 @@ class CreateStatusMessageView(CreateView):
         '''Return the URL to redirect to on success.'''
 
         profile = Profile.objects.get(pk=self.kwargs['pk'])
-        return reverse('show_profile', kwargs={'pk':profile.pk})
+        return reverse('profile', kwargs={'pk':profile.pk})
 
 
 class UpdateProfileView(UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
+
+class DeleteStatusMessageView(DeleteView):
+    model = StatusMessage
+    template_name = 'mini_fb/delete_status_form.html'
+    context_object_name = 'status'
+    def get_success_url(self):
+        profile = self.object.profile.pk
+        return reverse('profile', kwargs={'pk':profile})

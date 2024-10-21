@@ -11,7 +11,7 @@
     <!-- loop to display each Article -->
     {% for a in articles %}
     <article><!-- was <div> -->
-
+        
         <!-- new: display the image URL stored in database -->
         <img src="{{a.image_file.url}}" alt="{{a.image_url}}">
 

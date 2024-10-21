@@ -1,7 +1,7 @@
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
-<h1>Show all Profiles</h1>
+<h1>Detail</h1>
 
 <main class = "grid-container">
     <article class="featured">
@@ -12,13 +12,15 @@
         <h2>{{profile.email}}</h2>
         <h2>{{profile.city}}</h2>
     </div>
+</article>
+<div>
     <h4>
         <a href="{% url 'create_status' profile.pk %}">Create status</a>
     </h4>
     <h4>
         <a href="{% url 'update_profile' profile.pk %}">Update profile</a>
     </h4>
-</article>
+</div>
 <div>
     <h2>Status Message</h2>
     {% for m in profile.get_status_messages %}
@@ -26,10 +28,13 @@
         <strong>by {{m.timestamp}}</strong>
         <p>
             {{m.message}}
-        </p>
-        {% for img in m.get_images %}
+            {% for img in m.get_images %}
             <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
         {% endfor %}
+        </p>
+        <form action="{% url 'delete_status' m.pk %}">
+            <input type="submit" name="Delete" value="Delete">
+        </form>
     </div>
     {% endfor %}
 </div>
