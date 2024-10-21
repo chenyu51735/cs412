@@ -29,7 +29,7 @@ class CreateStatusMessageView(CreateView):
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
     context_object_name = 'status'
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(pk=self.kwargs['pk'])
@@ -46,8 +46,16 @@ class CreateStatusMessageView(CreateView):
         profile = Profile.objects.get(pk=self.kwargs['pk'])
 
         form.instance.profile = profile 
-
+        sm = form.save()
+        files = self.request.FILES.getlist('files')
+        for file in files:
+            image = Image(
+            image_file=file,
+            status_message=sm
+        )
+        image.save()
         # delegate work to superclass version of this method
+
         return super().form_valid(form)
 
     def get_success_url(self) -> str:

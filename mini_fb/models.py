@@ -22,7 +22,7 @@ class Profile(models.Model):
 class StatusMessage(models.Model):
 
     timestamp = models.DateTimeField(auto_now=True)
-    message = models.TextField(blank=False)
+    message = models.TextField(blank=True)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
 
     def get_images(self):
@@ -36,7 +36,7 @@ class StatusMessage(models.Model):
 class Image(models.Model):
 
     timestamp = models.DateTimeField(auto_now=True)
-    image_file = models.ImageField(blank=False)
+    image_file = models.ImageField(blank=True)
     status_message = models.ForeignKey("StatusMessage", on_delete=models.CASCADE)
 
     def __str__(self):
