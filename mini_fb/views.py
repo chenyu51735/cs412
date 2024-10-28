@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic import ListView
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, View
 from .models import *
 from .forms import *
 from typing import Any
@@ -77,3 +77,26 @@ class DeleteStatusMessageView(DeleteView):
     def get_success_url(self):
         profile = self.object.profile.pk
         return reverse('profile', kwargs={'pk':profile})
+    
+class UpdateStatusMessageView(UpdateView):
+    model = StatusMessage
+    form_class = UpdateStatusMessageForm    
+    template_name = 'mini_fb/update_status_form.html'
+    context_object_name = 'status'
+    def get_success_url(self):
+        profile = self.object.profile.pk
+        return reverse('profile', kwargs={'pk':profile})
+    
+class CreateFriendView(View):
+    model = Profile
+    def dispatch(self, request, *args, **kwargs):
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
+        profile.add_friend(other_profile)
+
+        return redirect('profile', pk=profile.pk)
+    
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'

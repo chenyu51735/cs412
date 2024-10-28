@@ -13,7 +13,7 @@
         <h2>{{profile.city}}</h2>
     </div>
 </article>
-<div>
+<div class = "profile-modify">
     <h4>
         <a href="{% url 'create_status' profile.pk %}">Create status</a>
     </h4>
@@ -21,7 +21,7 @@
         <a href="{% url 'update_profile' profile.pk %}">Update profile</a>
     </h4>
 </div>
-<div>
+<div class = "status_message">
     <h2>Status Message</h2>
     {% for m in profile.get_status_messages %}
     <div>
@@ -32,16 +32,19 @@
             <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
         {% endfor %}
         </p>
+        <form action="{% url 'update_status' m.pk %}">
+            <input type="submit" name="Update" value="Update">
+        </form>
         <form action="{% url 'delete_status' m.pk %}">
             <input type="submit" name="Delete" value="Delete">
         </form>
     </div>
     {% endfor %}
 </div>
-<div>
+<div class="friends-grid">
     <h2>{{ profile.first_name }}'s Friends</h2>
     {% if profile.get_friends %}
-    <div class="friends-grid">
+    <div>
         {% for friend in profile.get_friends %}
         <div class="friend-card">
             <a href="{% url 'profile' friend.pk %}">
@@ -57,6 +60,11 @@
     {% else %}
         <p>This user has no friends yet.</p>
     {% endif %}
+    <div class = "suggest-button">
+        <h4>
+            <a href="{% url 'friends_suggestion' profile.pk %}">Friend Suggestion</a>
+        </h4>
+        </div>
 </div>
 </main>
 {% endblock %}

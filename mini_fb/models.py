@@ -23,6 +23,24 @@ class Profile(models.Model):
                            [friend.profile1 for friend in friend2]
 
         return friends_profiles
+    
+    def add_friend(self, other):
+        if self == other:
+            raise "You cannot be friends with yourself."
+        friendship_exists = Friend.objects.filter(
+            models.Q(profile1=self, profile2=other) | 
+            models.Q(profile1=other, profile2=self)
+        ).exists()
+
+        if not friendship_exists:
+            Friend.objects.create(profile1=self, profile2=other)
+
+    def get_friend_suggestions(self):
+        friends = self.get_friends()
+        friend_ids = [friend.pk for friend in friends]
+        suggestions = Profile.objects.exclude(pk=self.pk).exclude(pk__in=friend_ids)
+        return suggestions
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
