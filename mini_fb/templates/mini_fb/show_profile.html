@@ -20,6 +20,9 @@
     <h4>
         <a href="{% url 'update_profile' profile.pk %}">Update profile</a>
     </h4>
+    <h4>
+        <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
+    </h4>
 </div>
 <div class = "status_message">
     <h2>Status Message</h2>
@@ -32,10 +35,10 @@
             <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
         {% endfor %}
         </p>
-        <form action="{% url 'update_status' m.pk %}">
+        <form action="{% url 'update_status' m.pk %}" class="update-button">
             <input type="submit" name="Update" value="Update">
         </form>
-        <form action="{% url 'delete_status' m.pk %}">
+        <form action="{% url 'delete_status' m.pk %}" class="delete-button">
             <input type="submit" name="Delete" value="Delete">
         </form>
     </div>

@@ -1,4 +1,4 @@
-/* General Styling */
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -20,7 +20,6 @@ h2 {
     color: #444;
 }
 
-/* Navigation Styling */
 nav ul {
     padding: 0;
     margin: 0;
@@ -45,7 +44,6 @@ nav a:hover {
     background-color: #0056b3;
 }
 
-/* Profile Container */
 .profile-container {
     display: flex;
     flex-direction: column;
@@ -53,7 +51,6 @@ nav a:hover {
     margin: 20px 0;
 }
 
-/* Profile Details Styling */
 .profile-details {
     background-color: white;
     padding: 20px;
@@ -101,7 +98,6 @@ nav a:hover {
     margin-top: 10px;
 }
 
-/* Form Styling */
 form {
     margin: 20px;
     padding: 10px;
@@ -144,14 +140,12 @@ button:hover, input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Image Styling */
 img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
-/* Grid Layout for Profile Overview Pages */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -194,29 +188,8 @@ article.featured {
     align-items: center;
     border-bottom: 1px solid #bbc7c7;
     padding-bottom: 40px;
-    width:auto;
-    height:auto;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-details, .status-messages, article {
-        padding: 15px;
-    }
-
-    .profile-details img {
-        width: 100px;
-        height: 100px;
-    }
-
-    article h2 {
-        font-size: 1em;
-    }
-}
 
 .friends-grid {
     padding: 20px;
@@ -224,6 +197,8 @@ article.featured {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    margin-left: 800px;
+    width: 200px;
 }
 
 .friends-grid h2 {
@@ -305,6 +280,7 @@ article.featured {
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 1000px;
 }
 
 .status_message h2 {
@@ -437,7 +413,9 @@ article.featured {
     background-color: #71ffd8;
     border-radius: 8px;
     padding: 10px;
-    margin: auto;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     transition: transform 0.2s ease-in-out;
@@ -467,4 +445,130 @@ article.featured {
 
 .suggestion-info a:hover {
     color: #0056b3;
+}
+
+.news-feed {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.status-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-author img.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #150484;
+}
+
+.status-author strong {
+    font-size: 1.1em;
+    color: #150484;
+}
+
+/* Message Text and Timestamp */
+.status-message p {
+    margin: 0;
+    color: #333;
+    font-size: 1em;
+}
+
+.status-message p small {
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* Images within the Status Message */
+.status-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+/* Navigation Button Back to Profile */
+.back-to-profile {
+    text-align: center;
+    margin: 20px;
+}
+
+.back-to-profile a {
+    background-color: #150484;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.back-to-profile a:hover {
+    background-color: #0e0460;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-details, .status-messages, article {
+        padding: 15px;
+    }
+
+    .profile-details img {
+        width: 100px;
+        height: 100px;
+    }
+
+    article h2 {
+        font-size: 1em;
+    }
+    .status-author img.profile-image {
+        width: 40px;
+        height: 40px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+        margin: 15px 0;
+    }
+    
+    .status-message {
+        padding: 10px;
+    }
+    
+    .back-to-profile a {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+}
+
+.update-button, .delete-button {
+    display: inline-block;
+    margin: 5px;
+}
+.update-button input[type="submit"] {
+    background-color: #3498db;
+    
+}
+
+.update-button input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.delete-button input[type="submit"] {
+    background-color: #e74c3c;
+}
+
+.delete-button input[type="submit"]:hover {
+    background-color: #c0392b;
 }

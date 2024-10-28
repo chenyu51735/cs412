@@ -17,4 +17,6 @@ urlpatterns = [
     path(r'status/<int:pk>/update', views.UpdateStatusMessageView.as_view(), name='update_status'), 
     path('profile/<int:pk>/add_friend/<int:other_pk>/', views.CreateFriendView.as_view(), name='add_friend'), 
     path('profile/<int:pk>/friend_suggestions', views.ShowFriendSuggestionsView.as_view(), name='friends_suggestion'), 
+    path('profile/<int:pk>/news_feed', views.ShowNewsFeedView.as_view(), name='news_feed'),
+
 ]

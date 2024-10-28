@@ -198,25 +198,6 @@ article.featured {
     height:auto;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-details, .status-messages, article {
-        padding: 15px;
-    }
-
-    .profile-details img {
-        width: 100px;
-        height: 100px;
-    }
-
-    article h2 {
-        font-size: 1em;
-    }
-}
 
 .friends-grid {
     padding: 20px;
@@ -467,4 +448,109 @@ article.featured {
 
 .suggestion-info a:hover {
     color: #0056b3;
+}
+
+.news-feed {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.status-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-author img.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #150484;
+}
+
+.status-author strong {
+    font-size: 1.1em;
+    color: #150484;
+}
+
+/* Message Text and Timestamp */
+.status-message p {
+    margin: 0;
+    color: #333;
+    font-size: 1em;
+}
+
+.status-message p small {
+    color: #999;
+    font-size: 0.9em;
+}
+
+/* Images within the Status Message */
+.status-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+/* Navigation Button Back to Profile */
+.back-to-profile {
+    text-align: center;
+    margin: 20px;
+}
+
+.back-to-profile a {
+    background-color: #150484;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.back-to-profile a:hover {
+    background-color: #0e0460;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 600px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-details, .status-messages, article {
+        padding: 15px;
+    }
+
+    .profile-details img {
+        width: 100px;
+        height: 100px;
+    }
+
+    article h2 {
+        font-size: 1em;
+    }
+    .status-author img.profile-image {
+        width: 40px;
+        height: 40px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+        margin: 15px 0;
+    }
+    
+    .status-message {
+        padding: 10px;
+    }
+    
+    .back-to-profile a {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
 }

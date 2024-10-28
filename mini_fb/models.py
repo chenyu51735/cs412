@@ -41,6 +41,12 @@ class Profile(models.Model):
         suggestions = Profile.objects.exclude(pk=self.pk).exclude(pk__in=friend_ids)
         return suggestions
 
+    def get_news_feed(self):
+        friends = self.get_friends()
+        profile_ids = [friend.pk for friend in friends]
+        news_feed = StatusMessage.objects.filter(profile__id__in=profile_ids).order_by('-timestamp')
+        return news_feed
+    
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
