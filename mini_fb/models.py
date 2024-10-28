@@ -16,6 +16,13 @@ class Profile(models.Model):
         messages = StatusMessage.objects.filter(profile=self)
         return messages
     
+    def get_friends(self):
+        friend1 = Friend.objects.filter(profile1=self)
+        friend2 = Friend.objects.filter(profile2=self)
+        friends_profiles = [friend.profile2 for friend in friend1] + \
+                           [friend.profile1 for friend in friend2]
+
+        return friends_profiles
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
@@ -29,6 +36,7 @@ class StatusMessage(models.Model):
         images = Image.objects.filter(status_message=self)
         return images
     
+    
     def __str__(self):
         return f'{self.message}'
     
@@ -41,3 +49,13 @@ class Image(models.Model):
 
     def __str__(self):
         return f'{self.image_file}'
+    
+
+class Friend(models.Model):
+
+    profile1 = models.ForeignKey("Profile", related_name="profile1", on_delete=models.CASCADE)
+    profile2 = models.ForeignKey("Profile", related_name="profile2", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.profile1.first_name} {self.profile1.last_name} & {self.profile2.first_name} {self.profile2.last_name}'

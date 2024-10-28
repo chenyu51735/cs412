@@ -38,5 +38,25 @@
     </div>
     {% endfor %}
 </div>
+<div>
+    <h2>{{ profile.first_name }}'s Friends</h2>
+    {% if profile.get_friends %}
+    <div class="friends-grid">
+        {% for friend in profile.get_friends %}
+        <div class="friend-card">
+            <a href="{% url 'profile' friend.pk %}">
+            <img src="{{ friend.image_url }}" alt="{{ friend.image_url }}" class="friend-image">
+            <div class="friend-info">
+                <a href="{% url 'profile' friend.pk %}">
+                    {{ friend.first_name }} {{ friend.last_name }}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>This user has no friends yet.</p>
+    {% endif %}
+</div>
 </main>
 {% endblock %}
