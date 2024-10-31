@@ -13,6 +13,7 @@
         <h2>{{profile.city}}</h2>
     </div>
 </article>
+{% if request.user.is_authenticated %}
 <div class = "profile-modify">
     <h4>
         <a href="{% url 'create_status' profile.pk %}">Create status</a>
@@ -24,6 +25,7 @@
         <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
     </h4>
 </div>
+{% endif %}
 <div class = "status_message">
     <h2>Status Message</h2>
     {% for m in profile.get_status_messages %}
@@ -35,12 +37,14 @@
             <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
         {% endfor %}
         </p>
+        {% if request.user.is_authenticated %}
         <form action="{% url 'update_status' m.pk %}" class="update-button">
             <input type="submit" name="Update" value="Update">
         </form>
         <form action="{% url 'delete_status' m.pk %}" class="delete-button">
             <input type="submit" name="Delete" value="Delete">
         </form>
+        {% endif %}
     </div>
     {% endfor %}
 </div>
@@ -63,11 +67,13 @@
     {% else %}
         <p>This user has no friends yet.</p>
     {% endif %}
+    {% if request.user.is_authenticated %}
     <div class = "suggest-button">
         <h4>
             <a href="{% url 'friends_suggestion' profile.pk %}">Friend Suggestion</a>
         </h4>
-        </div>
+    </div>
+    {% endif %}
 </div>
 </main>
 {% endblock %}

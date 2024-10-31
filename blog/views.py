@@ -1,7 +1,9 @@
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
+from django.http.request import HttpRequest as HttpRequest
 from django.shortcuts import render
 import random
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 from typing import Any
 from django.views.generic import ListView
@@ -18,7 +20,9 @@ class ShowAllView(ListView):
     model = Article
     template_name = 'blog/show_all.html'
     context_object_name = 'articles' #this is the context varibale to use the template
-
+    def dispatch(self, *args: Any, **kwargs: Any):
+        return super().dispatch(*args, **kwargs)
+    
 class RandomArticleView(DetailView):
     model = Article
     template_name = "blog/article.html"

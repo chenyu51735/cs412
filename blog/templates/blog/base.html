@@ -16,8 +16,22 @@
                 <li><a href="{% url 'show_all' %}">Show All</a></li>
                 <li><a href="{% url 'article' %}">Random</a></li>
                 <li><a href="{% url 'create_article' %}">Create Article </a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'create_article' %}">Create Article</a></li>
+                <li><a href="{% url 'logout' %}">Log out</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Log in</a></li>
+                {% endif %}
             </ul>
+
         </nav>
+        <p>
+            {% if request.user.is_authenticated %}
+            Logged in user: {{ request.user }}.
+            {% else %}
+            Not logged in.
+            {% endif %}
+        </p>
 
         {% block content %}
         <!-- fill in this section with specific page detail -->

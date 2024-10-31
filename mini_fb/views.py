@@ -5,6 +5,7 @@ from django.views.generic import DetailView, CreateView, UpdateView, DeleteView,
 from .models import *
 from .forms import *
 from typing import Any
+from django.contrib.auth.mixins import LoginRequiredMixin
 # class-based view
 class ShowAllProfilesView(ListView):
     '''the view ot show all profiles'''
@@ -12,6 +13,9 @@ class ShowAllProfilesView(ListView):
     template_name = 'mini_fb/show_all_profiles.html'
     context_object_name = 'profiles' #this is the context varibale to use the template
 
+    def dispatch(self, *args: Any, **kwargs: Any):
+        return super().dispatch(*args, **kwargs)
+    
 class ShowProfilePageView(DetailView):
     '''the view ot show a single profile'''
     model = Profile
@@ -23,12 +27,15 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
-
-class CreateStatusMessageView(CreateView):
+class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     '''the view to create status message'''
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
     context_object_name = 'status'
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -55,7 +62,10 @@ class CreateStatusMessageView(CreateView):
             )
             image.save()
         # delegate work to superclass version of this method
-
+        user = self.request.user
+        print(f"CreateStatusMessageView user={user} profile.user={user}")
+        # attach user to form instance (Article object):
+        form.instance.user = user
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
@@ -65,12 +75,28 @@ class CreateStatusMessageView(CreateView):
         return reverse('profile', kwargs={'pk':profile.pk})
 
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
 
-class DeleteStatusMessageView(DeleteView):
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+    
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'UpdateProfileView.form_valid(): form={form.cleaned_data}')
+        print(f'UpdateProfileView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"UpdateProfileView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    
+class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     model = StatusMessage
     template_name = 'mini_fb/delete_status_form.html'
     context_object_name = 'status'
@@ -78,7 +104,23 @@ class DeleteStatusMessageView(DeleteView):
         profile = self.object.profile.pk
         return reverse('profile', kwargs={'pk':profile})
     
-class UpdateStatusMessageView(UpdateView):
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+    
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'DeleteStatusMessageView.form_valid(): form={form.cleaned_data}')
+        print(f'DeleteStatusMessageView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"DeleteStatusMessageView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    
+class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     model = StatusMessage
     form_class = UpdateStatusMessageForm    
     template_name = 'mini_fb/update_status_form.html'
@@ -86,8 +128,24 @@ class UpdateStatusMessageView(UpdateView):
     def get_success_url(self):
         profile = self.object.profile.pk
         return reverse('profile', kwargs={'pk':profile})
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
     
-class CreateFriendView(View):
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'UpdateStatusMessageView.form_valid(): form={form.cleaned_data}')
+        print(f'UpdateStatusMessageView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"UpdateStatusMessageView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    
+class CreateFriendView(LoginRequiredMixin, View):
     model = Profile
     def dispatch(self, request, *args, **kwargs):
         profile = Profile.objects.get(pk=self.kwargs['pk'])
@@ -95,13 +153,61 @@ class CreateFriendView(View):
         profile.add_friend(other_profile)
 
         return redirect('profile', pk=profile.pk)
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
     
-class ShowFriendSuggestionsView(DetailView):
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'CreateFriendView.form_valid(): form={form.cleaned_data}')
+        print(f'CreateFriendView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"CreateFriendView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    
+class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
 
-class ShowNewsFeedView(DetailView):
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+    
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'ShowFriendSuggestionsView.form_valid(): form={form.cleaned_data}')
+        print(f'ShowFriendSuggestionsView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"ShowFriendSuggestionsView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    
+class ShowNewsFeedView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'mini_fb/news_feed.html'
     context_object_name = 'profile'
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+    
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'ShowNewsFeedView.form_valid(): form={form.cleaned_data}')
+        print(f'ShowNewsFeedView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"ShowNewsFeedView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
