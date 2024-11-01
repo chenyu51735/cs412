@@ -9,7 +9,6 @@
     <img src='{{img.image_file.url}}' alt='{{img.image_file.url}}'> 
     {% endfor %}
     <p>{{ status.timestamp }}</p>
-</div>
 
 <p>Are you sure you want to delete this status message?</p>
 
@@ -20,4 +19,5 @@
 <form method="GET" action="{% url 'profile' status.profile.pk %}" class="delete-button">
     <button type="submit">No</button>
 </form>
+</div>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Show all Profiles</h1>
 
-<main class = "grid-container">
+<main class = "all-profile">
     {% for p in profiles %}
     <article>
         <a href="{% url 'profile' p.pk %}">

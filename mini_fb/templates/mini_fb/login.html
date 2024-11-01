@@ -1,7 +1,7 @@
 {% extends 'mini_fb/base.html' %}
 {% block content %}
 <h1>Login</h1>
-<form method="post" action="{% url 'login' %}" >
+<form method="post" action="{% url 'login' %}" class="login-form">
     {% csrf_token %}
     {{form}}
     <input type="hidden" name="next" value="{% url 'show_all_profiles' %}">

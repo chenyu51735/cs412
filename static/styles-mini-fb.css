@@ -99,16 +99,9 @@ nav a:hover {
 }
 
 form {
-    margin: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    display: inline;
+    
 }
-
 form div {
     margin-bottom: 15px;
 }
@@ -558,7 +551,6 @@ article.featured {
 }
 .update-button input[type="submit"] {
     background-color: #3498db;
-    
 }
 
 .update-button input[type="submit"]:hover {
