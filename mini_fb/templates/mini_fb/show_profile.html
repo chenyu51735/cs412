@@ -13,7 +13,7 @@
     </section>
 
 
-    {% if request.user.is_authenticated %}
+    {% if request.user == profile.user %}
     <section class = "profile-modify">
         <h4>
             <a href="{% url 'create_status' profile.pk %}">Create status</a>
@@ -45,7 +45,7 @@
         {% else %}
             <p>This user has no friends yet.</p>
         {% endif %}
-        {% if request.user.is_authenticated %}
+        {% if request.user == profile.user %}
         <div class = "suggest-button">
             <h4>
                 <a href="{% url 'friends_suggestion' profile.pk %}">Friend Suggestion</a>
@@ -67,7 +67,7 @@
             {% for img in m.get_images %}
             <img src="{{ img.image_file.url }}" alt="Status image" class="status-image">
             {% endfor %}
-        {% if request.user.is_authenticated %}
+        {% if request.user == profile.user %}
         <form action="{% url 'update_status' m.pk %}" class="update-button">
             <input type="submit" name="Update" value="Update">
         </form>
