@@ -79,7 +79,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return reverse('login') 
 
     def get_object(self):
-        return Profile.objects.get(user=self.request.user.profile)
+        return Profile.objects.get(user=self.request.user)
 
     def form_valid(self, form):
         '''This method is called after the form is validated, 

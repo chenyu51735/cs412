@@ -191,7 +191,6 @@ h1 {
     border-radius: 5px;
 }
 
-/* Buttons */
 button, input[type="submit"] {
     background-color: #4267b2;
     color: white;
@@ -205,7 +204,6 @@ button:hover, input[type="submit"]:hover {
     background-color: #365899;
 }
 
-/* Back Button */
 .back-button input {
     background-color: #ddd;
     color: #333;
@@ -326,7 +324,6 @@ form input[type="submit"]:hover {
     background-color: #365899;
 }
 
-/* Create and Update Profile Pages */
 h2 {
     text-align: center;
     color: #4267b2;
@@ -383,7 +380,6 @@ input[type="file"] {
     background-color: #365899;
 }
 
-/* News Feed */
 .news-feed {
     max-width: 600px;
     margin: 0 auto;
@@ -541,3 +537,5 @@ form label {
 .login-form input[type="submit"]:hover {
     background-color: #365899;
 }
+
+
