@@ -22,6 +22,7 @@ class ShowProfilePageView(DetailView):
     template_name = 'mini_fb/show_profile.html'
     context_object_name = 'profile'
 
+
 class CreateProfileView(CreateView):
     '''the view to create profile'''
     form_class = CreateProfileForm
@@ -37,10 +38,9 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         '''return the URL required for login'''
         return reverse('login') 
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
-        context['profile'] = profile
+        context['profile'] = Profile.objects.get(user=self.request.user)
         return context
     
     def form_valid(self, form):
@@ -50,7 +50,7 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         print(f'CreateStatusMessageView.form_valid(): form={form.cleaned_data}')
         print(f'CreateStatusMessageView.form_valid(): self.kwargs={self.kwargs}')
 
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(user=self.request.user)
 
         form.instance.profile = profile 
         sm = form.save()
@@ -61,18 +61,12 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
             status_message=sm
             )
             image.save()
-        # delegate work to superclass version of this method
-        user = self.request.user
-        print(f"CreateStatusMessageView user={user} profile.user={user}")
-        # attach user to form instance (Article object):
-        form.instance.user = user
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
         '''Return the URL to redirect to on success.'''
 
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
-        return reverse('profile', kwargs={'pk':profile.pk})
+        return reverse('profile', kwargs={'pk': self.request.user.profile.pk})
 
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
@@ -83,7 +77,10 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     def get_login_url(self) -> str:
         '''return the URL required for login'''
         return reverse('login') 
-    
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user.profile)
+
     def form_valid(self, form):
         '''This method is called after the form is validated, 
         before saving data to the database.'''
@@ -115,9 +112,6 @@ class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
         print(f'DeleteStatusMessageView.form_valid(): form={form.cleaned_data}')
         print(f'DeleteStatusMessageView.form_valid(): self.kwargs={self.kwargs}')
 
-        user = self.request.user
-        print(f"DeleteStatusMessageView user={user} profile.user={user}")
-        form.instance.user = user
         return super().form_valid(form)
     
 class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
@@ -148,12 +142,12 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
 class CreateFriendView(LoginRequiredMixin, View):
     model = Profile
     def dispatch(self, request, *args, **kwargs):
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(user=request.user)
         other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
         profile.add_friend(other_profile)
 
         return redirect('profile', pk=profile.pk)
-
+    
     def get_login_url(self) -> str:
         '''return the URL required for login'''
         return reverse('login') 
@@ -178,7 +172,10 @@ class ShowFriendSuggestionsView(LoginRequiredMixin, DetailView):
     def get_login_url(self) -> str:
         '''return the URL required for login'''
         return reverse('login') 
-    
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
     def form_valid(self, form):
         '''This method is called after the form is validated, 
         before saving data to the database.'''
@@ -199,6 +196,9 @@ class ShowNewsFeedView(LoginRequiredMixin, DetailView):
     def get_login_url(self) -> str:
         '''return the URL required for login'''
         return reverse('login') 
+    
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
     
     def form_valid(self, form):
         '''This method is called after the form is validated, 

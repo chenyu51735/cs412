@@ -12,7 +12,7 @@
                 {{ friend.first_name }} {{ friend.last_name }}
             </div>
         </a>
-        <form action="{% url 'add_friend' profile.pk friend.pk %}" method="post" class="add-friend">
+        <form action="{% url 'add_friend' friend.pk %}" method="post" class="add-friend">
             {% csrf_token %}
             <button type="submit">Add Friend</button>
         </form>

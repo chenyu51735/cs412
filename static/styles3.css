@@ -1,9 +1,26 @@
-/* General Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
+}
+
+
+.log-out h1 {
+    margin: 100px;
+    color: #4267b2;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.log-out p {
+    text-align: center;
+    font-size: 16px;
+}
+
+.log-out p a {
+    color: #4267b2;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 nav {
@@ -16,7 +33,7 @@ nav {
 }
 
 nav p {
-    margin: 0;
+    align-items: end;
     font-size: 14px;
 }
 
@@ -41,7 +58,6 @@ nav ul li a {
     border-radius: 4px;
     transition: background-color 0.3s;
 }
-
 nav ul li a:hover {
     background-color: #4b70aa;
 }
@@ -466,7 +482,7 @@ input[type="file"] {
     color: #365899;
 }
 
-.create-profile, .create-status, .update-status, .login-form, .delete-status, .update-profile {
+.create-profile, .create-status, .update-status, .delete-status, .update-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -490,4 +506,38 @@ form label {
     color: #555;
     display: flex;
     margin-bottom: 5px;
+}
+
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-form input[type="text"], .login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4267b2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #365899;
 }

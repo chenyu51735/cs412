@@ -16,13 +16,13 @@
     {% if request.user == profile.user %}
     <section class = "profile-modify">
         <h4>
-            <a href="{% url 'create_status' profile.pk %}">Create status</a>
+            <a href="{% url 'create_status' %}">Create status</a>
         </h4>
         <h4>
-            <a href="{% url 'update_profile' profile.pk %}">Update profile</a>
+            <a href="{% url 'update_profile'%}">Update profile</a>
         </h4>
         <h4>
-            <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
+            <a href="{% url 'news_feed'%}">News Feed</a>
         </h4>
     </section>
     {% endif %}
@@ -48,7 +48,7 @@
         {% if request.user == profile.user %}
         <div class = "suggest-button">
             <h4>
-                <a href="{% url 'friends_suggestion' profile.pk %}">Friend Suggestion</a>
+                <a href="{% url 'friends_suggestion' %}">Friend Suggestion</a>
             </h4>
         </div>
         {% endif %}
