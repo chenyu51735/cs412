@@ -478,7 +478,7 @@ input[type="file"] {
     color: #365899;
 }
 
-.create-profile, .create-status, .update-status, .delete-status, .update-profile {
+ .create-status, .update-status, .delete-status, .update-profile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -486,8 +486,10 @@ input[type="file"] {
 }
 form input[type="text"],
 form input[type="file"],
+form input[type="url"],
 form textarea {
     width: 500px;
+    height: 40px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -539,3 +541,27 @@ form label {
 }
 
 
+.create-profile {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.create-profile p {
+    text-align: left;
+}
+
+.create-profile input[type="text"],
+.create-profile input[type="email"],
+.create-profile input[type="password"],
+.create-profile input[type="url"],
+.create-profile textarea {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    align-items: center;
+}

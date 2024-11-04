@@ -6,6 +6,8 @@ from .models import *
 from .forms import *
 from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+
 # class-based view
 class ShowAllProfilesView(ListView):
     '''the view ot show all profiles'''
@@ -28,6 +30,21 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_creation_form'] = UserCreationForm()
+        return context
+    
+    def form_valid(self, form):
+        user_creation_form = UserCreationForm(self.request.POST)
+
+        if user_creation_form.is_valid():
+            user = user_creation_form.save()
+            form.instance.user = user
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, user_creation_form=user_creation_form))
+        
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     '''the view to create status message'''
     form_class = CreateStatusMessageForm
