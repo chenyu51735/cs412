@@ -40,7 +40,12 @@ class CreateProfileView(CreateView):
 
         if user_creation_form.is_valid():
             user = user_creation_form.save()
+            if Profile.objects.filter(user=user).exists():
+                # Redirect to the profile page or show a message
+                return redirect('profile', pk=user.profile.pk)
+
             form.instance.user = user
+            
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form, user_creation_form=user_creation_form))
