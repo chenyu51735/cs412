@@ -14,6 +14,3 @@ pillow = "*"
 
 [requires]
 python_version = "3.12.3"
-pipenv install plotly
-pipenv install pandas
-pipenv lock
