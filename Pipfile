@@ -7,7 +7,8 @@ name = "pypi"
 django = "*"
 gunicorn = "*"
 whitenoise = "*"
-pillow = "*"pipenv install plotly
+pillow = "*"
+pipenv install plotly
 pipenv install pandas
 pipenv lock
 
