@@ -1,0 +1,129 @@
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="detail-header">
+        <h1>Voter Details</h1>
+        <div class="back-link">
+        <a href="{% url 'voter_list' %}">Back to Voter List</a>
+        </div>
+    </div>
+  
+    <div class="detail-card">
+
+        <div class="detail-section personal-info">
+            <h2>Personal Information</h2>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <label>First Name</label>
+                    <span>{{voter.first_name}}</span>
+                </div>
+
+                <div class="info-item">
+                    <label>Last Name</label>
+                    <span>{{voter.last_name}}</span>
+                </div>
+
+                <div class="info-item">
+                    <label>Date of Birth</label>
+                    <span>{{voter.dob}}</span>
+                </div>
+            </div>
+
+        </div>
+  
+      <div class="detail-section address-info">
+        <h2>Address</h2>
+        <div class="info-grid">
+          
+            <div class="info-item full-width">
+                <label>Street Address</label>
+                <span>
+                    {{ voter.street_number }} {{ voter.street_name }}, 
+                    {% if voter.apartment_number %}
+                        #{{ voter.apartment_number }},
+                    {% endif %}
+                    {{ voter.zip_code }}
+                </span>
+            </div>
+
+            <div class="info-item">
+                <label>ZIP Code</label>
+                <span>{{voter.zip_code}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>Google Maps</label>
+                <span>
+                <a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_number }}+{{ voter.street_name }}+{{ voter.zip_code }}" target="_blank">
+                Open in Google Maps
+                </a>
+                </span>
+            </div>
+          
+        </div>
+      </div>
+  
+      <div class="detail-section voting-info">
+        <h2>Voting Information</h2>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <label>Party Affiliation</label>
+                <span>{{voter.party_affiliation}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>Voter Score</label>
+                <span>{{voter.voter_score}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>Date of Registration</label>
+                <span>{{voter.date_of_registration}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>Precinct Number</label>
+                <span>{{voter.precinct_number}}</span>
+            </div>
+
+      </div>
+    </div>
+
+    <div class="detail-section voting-info">
+        <h2>Past Elections</h2>
+        <div class="info-grid">
+            <div class="info-item">
+                <label>2020 State Election</label>
+                <span>{{voter.v20state}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>2021 Town Election</label>
+                <span>{{voter.v21town}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>2021 Primary Election</label>
+                <span>{{voter.v21primary}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>2022 General Election</label>
+                <span>{{voter.v22general}}</span>
+            </div>
+
+            <div class="info-item">
+                <label>2023 Town Election</label>
+                <span>{{voter.v23town}}</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+  </div>
+{% endblock %}

@@ -48,23 +48,23 @@ def load_data():
        
         try:
             # create a new instance of Voter object with this record from CSV
-            voter = Voter(last_name = fields[1],
-                            first_name = fields[2],
-                            street_number = fields[3],
-                            street_name = fields[4],
-                            apartment_number = fields[5],
-                            zip_code = fields[6],
-                            dob = fields[7],
-                            date_of_registration = fields[8],
-                            party_affiliation = fields[9],
-                            precinct_number = fields[10],
+            voter = Voter(last_name = fields[1].strip(),
+                            first_name = fields[2].strip(),
+                            street_number = fields[3].strip(),
+                            street_name = fields[4].strip(),
+                            apartment_number = fields[5].strip(),
+                            zip_code = fields[6].strip(),
+                            dob = fields[7].strip(),
+                            date_of_registration = fields[8].strip(),
+                            party_affiliation = fields[9].strip(),
+                            precinct_number = fields[10].strip(),
                         
-                            v20state = fields[11],
-                            v21town = fields[12],
-                            v21primary = fields[13],
-                            v22general = fields[14],
-                            v23town = fields[15],
-                            voter_score = fields[16],
+                            v20state = fields[11].strip(),
+                            v21town = fields[12].strip(),
+                            v21primary = fields[13].strip(),
+                            v22general = fields[14].strip(),
+                            v23town = fields[15].strip(),
+                            voter_score = fields[16].strip(),
                         )
             voter.save() # commit to database
             print(f'Created voter: {voter}')
