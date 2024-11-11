@@ -8,11 +8,12 @@ django = "*"
 gunicorn = "*"
 whitenoise = "*"
 pillow = "*"
-pipenv install plotly
-pipenv install pandas
-pipenv lock
+
 
 [dev-packages]
 
 [requires]
 python_version = "3.12.3"
+pipenv install plotly
+pipenv install pandas
+pipenv lock
