@@ -1,0 +1,18 @@
+{% load static %}
+<html>
+    <head>
+        <title>Iyu</title>
+        <link rel="stylesheet" href="{% static 'styles-project.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <li>
+                <a href="show_profile">My Profile</a>
+            </li>
+        </nav>
+    {% block content %}
+    <!-- fill in this section with specific page detail -->
+    {% endblock %}
+    </body>
+</html>
