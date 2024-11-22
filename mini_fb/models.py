@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 # Create your models here.
 class Profile(models.Model):
 
@@ -56,7 +58,7 @@ class StatusMessage(models.Model):
 
     timestamp = models.DateTimeField(auto_now=True)
     message = models.TextField(blank=True)
-    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name='st')
 
     def get_images(self):
         images = Image.objects.filter(status_message=self)

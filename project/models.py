@@ -16,13 +16,28 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     image_file = models.ImageField(blank=True)
     rating = models.DecimalField(decimal_places=2, max_digits=3, default=0.00)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='project_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='project_profile')
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': self.pk})
     
     def get_items(self):
-        return Item.objects.filter(user=self)
+        return Item.objects.filter(seller=self)
+
+    def get_wishlist(self):
+        """
+        Retrieve all items in the user's wishlist.
+        """
+        return Wishlist.objects.filter(profile=self)
+    
+    def add_transaction(self, item, buyer):
+        """
+        Add a transaction for the profile.
+        """
+        if self==item.seller:
+            raise "You cannot be buy your own item."
+        transaction = Transaction.objects.create(item=item, buyer=buyer)
+        return transaction
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -67,19 +82,18 @@ class Transaction(models.Model):
     '''
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     buyer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='buyer')
-    seller = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='seller')
     transaction_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'<<{self.item}>> {self.transaction_date}'
+        return f'{self.item.seller} sold {self.item} to {self.buyer} at {self.transaction_date}'
     
 class Wishlist(models.Model):
     '''
     Save items to wishlist for future viewing
     '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wishlist')
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='wishlist_profile')
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='wishlist_item')
     added_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.item} {self.user}'
+        return f'{self.profile.first_name} {self.profile.last_name} added {self.item} to wishlist'
