@@ -31,13 +31,28 @@ class Item(models.Model):
     '''
     Represent each item listed for sale
     '''
+    class Category(models.TextChoices):
+        ELECTRONICS = 'Electronics', 'Electronics'
+        HOME = 'Home', 'Home'
+        COLLECTIBLES = 'Collectibles', 'Collectibles'
+        CLOTHING = 'Clothing, Shoes & Accessories', 'Clothing, Shoes & Accessories'
+        SPORTING_GOODS = 'Sporting Goods', 'Sporting Goods'
+        JEWELRY = 'Jewelry & Watches', 'Jewelry & Watches'
+        BUSINESS = 'Business & Industrial', 'Business & Industrial'
+
+    class Condition(models.TextChoices):
+        NEW = 'New', 'New'
+        LIKE_NEW = 'Like New', 'Like New'
+        GOOD = 'Good', 'Good'
+        ACCEPTABLE = 'Acceptable', 'Acceptable'
+        POOR = 'Poor', 'Poor'
+
     title = models.TextField(blank=False)
     product = models.TextField(blank=False)
     description = models.TextField(blank=True)
     brand = models.TextField(blank=False)
-    category = models.TextChoices('Electronics', 'Home', 'Collectibles', 'Clothing, Shoes & Accessories',
-                                  'Sporting Goods', 'Jewelry & Watches', 'Business & Industrial')
-    Condition = models.TextChoices('New', 'Like New', 'Good', 'acceptable', 'poor')
+    category = models.CharField(max_length=50, choices=Category.choices, blank=False, default=Category.ELECTRONICS)
+    condition = models.CharField(max_length=50, choices=Condition.choices, blank=False, default=Condition.NEW)
     price = models.DecimalField(decimal_places=2, max_digits=11)
     seller = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='item_seller')
     images = models.ImageField(blank=False)
