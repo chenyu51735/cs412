@@ -20,6 +20,9 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('profile', kwargs={'pk': self.pk})
+    
+    def get_items(self):
+        return Item.objects.filter(user=self)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -64,4 +67,4 @@ class Wishlist(models.Model):
     added_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.item}'
+        return f'{self.item} {self.user}'
