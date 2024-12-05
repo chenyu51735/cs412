@@ -6,10 +6,23 @@
     </head>
 
     <body>
-        <nav>
+        <nav class="nav-bar">
+
+            {% if request.user.is_authenticated %}
+            <p>
+            {{request.user}} is logged in
+            </p>
+            <li><a href="{% url 'project_profile' request.user.project_profile.pk %}">My Profile</a></li>
             <li>
-                <a href="show_profile">My Profile</a>
+                <form action="{% url 'logout' %}" method="POST" class="logout-button">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>
             </li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <p>Not logged in</p>
+            {% endif %}
         </nav>
     {% block content %}
     <!-- fill in this section with specific page detail -->

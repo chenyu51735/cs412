@@ -15,11 +15,11 @@ class Profile(models.Model):
     city = models.TextField(blank=True)
     bio = models.TextField(blank=True)
     image_file = models.ImageField(blank=True)
-    rating = models.DecimalField(decimal_places=2, max_digits=3, default=0.00)
+    rating = models.DecimalField(decimal_places=2, max_digits=3, default=5.00)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='project_profile')
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'pk': self.pk})
+        return reverse('project_profile', kwargs={'pk': self.pk})
     
     def get_items(self):
         return Item.objects.filter(seller=self)

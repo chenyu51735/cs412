@@ -4,6 +4,16 @@
 
 <h2>My Profile</h2>
 
+<main class = "grid-container">
+    <section class="profile-section">
+        <img src="{{ project_profile.image_file.url }}" alt="profile image" class="profile-image">
+        <h2>{{profile.first_name}} {{profile.last_name}}</h2>
+        <h3>Email: {{profile.email}}</h3>
+        <h3>City: {{profile.city}}</h3>
+        <h3>Rating: {{profile.rating}}</h3>
+    </section>
+
+</main>
 
 
 

@@ -1,0 +1,11 @@
+{% extends 'project/base.html' %}
+{% block content %}
+<h1>Login</h1>
+<form method="post" action="{% url 'login' %}" class="login-form">
+    {% csrf_token %}
+    {{form}}
+    <input type="hidden" name="next" value="{% url 'item_list' %}">
+    <input type="submit" value="Login">
+    <p>Don't have an account? <a href="{% url 'create_profile' %}">Register</a> here.</p>
+</form>
+{% endblock %}

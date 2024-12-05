@@ -1,0 +1,19 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+
+<h2>Detail</h2>
+    <div class="item_detail">
+                <img src="{{ item.images.url }}" alt="{{ item.title }}" class="item-image">
+                <h2>{{ item.title }}</h2>
+                <p><strong>Brand:</strong> {{ item.brand }}</p>
+                <p><strong>Category:</strong> {{ item.get_category_display }}</p>
+                <p><strong>Condition:</strong> {{ item.get_condition_display }}</p>
+                <p><strong>Price:</strong> ${{ item.price }}</p>
+                <p><strong>Posted by:</strong> {{ item.seller }}</p>
+                <p><strong>Description:</strong> {{ item.description|truncatewords:20 }}</p>
+    </div>
+    <form action="{% url 'item_list' %}" class="back-button">
+        <input type="submit" name="Back" value="Back"></a>
+    </form>
+{% endblock %}

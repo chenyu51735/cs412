@@ -1,0 +1,231 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #4CAF50;
+}
+
+/* Nav bar*/
+
+
+/* Item List */
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+/* Individual Item Card */
+.item-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.item-card p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+.item-card a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.item-card a:hover {
+    text-decoration: underline;
+}
+
+/* Item Detail Page Styles */
+.item_detail {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.item_detail img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item_detail h2 {
+    font-size: 24px;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.item_detail p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.item_detail p strong {
+    color: #333;
+    font-weight: bold;
+}
+
+
+/* Profile Page Styles */
+.grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.profile-section {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #4CAF50;
+    margin-bottom: 15px;
+}
+
+.profile-section h2 {
+    margin: 10px 0;
+    color: #333;
+}
+
+.profile-section h3 {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination .step-links a {
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.pagination .step-links a:hover {
+    text-decoration: underline;
+}
+
+.pagination .current {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+
+/* back button */
+button, input[type="submit"] {
+    background-color: #4267b2;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #365899;
+}
+
+.back-button input {
+    background-color: #ddd;
+    color: #333;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.back-button input:hover {
+    background-color: #bbb;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .item-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .item-card {
+        width: 90%;
+    }
+    .item_detail {
+        padding: 15px;
+    }
+
+    .item_detail img {
+        max-width: 100%;
+    }
+
+    .item_detail h2 {
+        font-size: 20px;
+    }
+
+    .item_detail p {
+        font-size: 14px;
+    }
+}
