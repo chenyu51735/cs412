@@ -3,17 +3,38 @@
 {% block content %}
 
 <h2>Detail</h2>
-    <div class="item_detail">
-                <img src="{{ item.images.url }}" alt="{{ item.title }}" class="item-image">
-                <h2>{{ item.title }}</h2>
-                <p><strong>Brand:</strong> {{ item.brand }}</p>
-                <p><strong>Category:</strong> {{ item.get_category_display }}</p>
-                <p><strong>Condition:</strong> {{ item.get_condition_display }}</p>
-                <p><strong>Price:</strong> ${{ item.price }}</p>
-                <p><strong>Posted by:</strong> {{ item.seller }}</p>
-                <p><strong>Description:</strong> {{ item.description|truncatewords:20 }}</p>
-    </div>
-    <form action="{% url 'item_list' %}" class="back-button">
-        <input type="submit" name="Back" value="Back"></a>
-    </form>
+<div class="item_detail">
+    <img src="{{ item.images.url }}" alt="{{ item.title }}" class="item-image">
+    <h2>{{ item.title }}</h2>
+    <p><strong>Product:</strong> {{ item.product }}</p>
+    <p><strong>Brand:</strong> {{ item.brand }}</p>
+    <p><strong>Category:</strong> {{ item.get_category_display }}</p>
+    <p><strong>Condition:</strong> {{ item.get_condition_display }}</p>
+    <p><strong>Price:</strong> ${{ item.price }}</p>
+    <p><strong>Posted by:</strong> {{ item.seller }}</p>
+    <p><strong>Description:</strong> {{ item.description|truncatewords:20 }}</p>
+</div>
+
+{% if user.is_authenticated %}
+    {% if request.user.project_profile != item.seller %}
+        <form method="POST" action="{% url 'complete_transaction' item.pk %}">
+            {% csrf_token %}
+            <button type="submit">Buy Now</button>
+        </form>
+        <form method="POST" action="{% url 'add_to_wishlist' item.pk %}">
+            {% csrf_token %}
+            <button type="submit">Add to Wishlist</button>
+        </form>
+        
+    {% else %}
+        <p><strong>You cannot buy your own item.</strong></p>
+    {% endif %}
+{% else %}
+    <p><strong>You need to <a href="{% url 'login' %}">log in</a> to purchase this item.</strong></p>
+{% endif %}
+
+<form action="{% url 'item_list' %}" class="back-button">
+    <input type="submit" name="Back" value="Back">
+</form>
+
 {% endblock %}

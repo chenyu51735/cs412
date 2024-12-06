@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 # Create your models here.
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 class Profile(models.Model):
     '''
     Stores personal information about each user
@@ -14,7 +14,7 @@ class Profile(models.Model):
     phone = models.TextField(blank=False)
     city = models.TextField(blank=True)
     bio = models.TextField(blank=True)
-    image_file = models.ImageField(blank=True)
+    image_file = models.ImageField(blank=False)
     rating = models.DecimalField(decimal_places=2, max_digits=3, default=5.00)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='project_profile')
 
@@ -23,6 +23,21 @@ class Profile(models.Model):
     
     def get_items(self):
         return Item.objects.filter(seller=self)
+
+    def update_rating(self):
+        """
+        Updates the average rating based on all related transactions.
+        """
+        from .models import Transaction
+        seller_ratings = list(Transaction.objects.filter(item__seller=self).exclude(seller_rating__isnull=True).values_list('seller_rating', flat=True))
+        buyer_ratings = list(Transaction.objects.filter(buyer=self).exclude(buyer_rating__isnull=True).values_list('buyer_rating', flat=True))
+        all_ratings = seller_ratings + buyer_ratings
+
+        if all_ratings:
+            self.rating = sum(all_ratings) / len(all_ratings)
+        else:
+            self.rating = 5.00
+        self.save()
 
     def get_wishlist(self):
         """
@@ -72,6 +87,7 @@ class Item(models.Model):
     seller = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='item_seller')
     images = models.ImageField(blank=False)
     post_date = models.DateTimeField(auto_now=True)
+    sold = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.product}'
@@ -83,7 +99,16 @@ class Transaction(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     buyer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='buyer')
     transaction_date = models.DateTimeField(auto_now=True)
-
+    seller_rating = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+    buyer_rating = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    ) 
     def __str__(self):
         return f'{self.item.seller} sold {self.item} to {self.buyer} at {self.transaction_date}'
     

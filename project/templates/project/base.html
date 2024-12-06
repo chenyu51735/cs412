@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Iyu</title>
-        <link rel="stylesheet" href="{% static 'styles-project.css' %}">
+        <link rel="stylesheet" href="{% static 'styles5.css' %}">
     </head>
 
     <body>
@@ -12,7 +12,11 @@
             <p>
             {{request.user}} is logged in
             </p>
+            <li><a href="{% url 'item_list' %}">Home</a></li>
             <li><a href="{% url 'project_profile' request.user.project_profile.pk %}">My Profile</a></li>
+            <li><a href="{% url 'wishlist' %}">My Wishlist</a></li>
+            <li><a href="{% url 'new_item' %}">Post Item</a></li>
+            <li><a href="{% url 'transaction_history' %}">My transaction</a></li>
             <li>
                 <form action="{% url 'logout' %}" method="POST" class="logout-button">
                     {% csrf_token %}

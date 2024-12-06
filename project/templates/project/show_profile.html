@@ -7,12 +7,30 @@
 <main class = "grid-container">
     <section class="profile-section">
         <img src="{{ project_profile.image_file.url }}" alt="profile image" class="profile-image">
-        <h2>{{profile.first_name}} {{profile.last_name}}</h2>
-        <h3>Email: {{profile.email}}</h3>
-        <h3>City: {{profile.city}}</h3>
-        <h3>Rating: {{profile.rating}}</h3>
+        <h2>{{project_profile.first_name}} {{project_profile.last_name}}</h2>
+        <h3>Email: {{project_profile.email}}</h3>
+        <h3>City: {{project_profile.city}}</h3>
+        <h3>Phone: {{project_profile.phone}}</h3>
+        <h3>Rating: {{project_profile.rating}}</h3>
+        <h3>Bio: {{project_profile.bio}}</h3> 
     </section>
 
+    <section class="items-section">
+        <h3>Items Posted</h3>
+        {% if items %}
+            <ul class="item-list">
+                {% for item in items %}
+                    <li class="item-card">
+                        <img src="{{ item.images.url }}" alt="{{ item.title }}" class="item-image" width="100px">
+                        <h4>{{ item.title }}</h4>
+                        <a href="{% url 'item' item.pk %}">View Details</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have not posted any items yet.</p>
+        {% endif %}
+    </section>
 </main>
 
 

@@ -1,0 +1,22 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>My Wishlist</h2>
+<ul>
+    {% for item in wishlist_items %}
+        <li>
+            <img src="{{ item.item.images.url }}" alt="{{ item.item.title }}" width="100px">
+            {{ item.item.title }} - ${{ item.item.price }}
+            <form method="POST" action="{% url 'remove_from_wishlist' item.pk %}">
+                {% csrf_token %}
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+    {% empty %}
+        <p>No items in your wishlist.</p>
+    {% endfor %}
+</ul>
+<form action="{% url 'item_list' %}" class="back-button">
+    <input type="submit" name="Back" value="Back">
+</form>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Transaction History</h2>
+
+<div class="transaction-section">
+    <h3>Sold Items</h3>
+    {% if transactions.sold_items %}
+        <ul>
+            {% for transaction in transactions.sold_items %}
+                <li>
+                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px">
+                    <p><strong>Item:</strong> {{ transaction.item.title }}</p>
+                    <p><strong>Buyer:</strong> {{ transaction.buyer.first_name }} {{ transaction.buyer.last_name }}</p>
+                    <p><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</p>
+
+                    <form method="post" action="{% url 'rate_transaction' transaction.pk %}">
+                        {% csrf_token %}
+                        <label for="rating-{{ transaction.pk }}">Rate Buyer (1 to 5):</label>
+                        <input type="number" id="rating-{{ transaction.pk }}" name="rating" min="1" max="5" value="{{ transaction.buyer_rating }}" required>
+                        <button type="submit">Submit Rating</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not sold any items yet.</p>
+    {% endif %}
+</div>
+
+<div class="transaction-section">
+    <h3>Bought Items</h3>
+    {% if transactions.bought_items %}
+        <ul>
+            {% for transaction in transactions.bought_items %}
+                <li>
+                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px">
+                    <p><strong>Item:</strong> {{ transaction.item.title }}</p>
+                    <p><strong>Seller:</strong> {{ transaction.item.seller.first_name }} {{ transaction.item.seller.last_name }}</p>
+                    <p><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</p>
+
+                    <form method="post" action="{% url 'rate_transaction' transaction.pk %}">
+                        {% csrf_token %}
+                        <label for="rating-{{ transaction.pk }}">Rate Seller (1 to 5):</label>
+                        <input type="number" id="rating-{{ transaction.pk }}" name="rating" min="1" max="5" value="{{ transaction.seller_rating }}" required>
+                        <button type="submit">Submit Rating</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not bought any items yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
