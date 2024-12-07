@@ -13,8 +13,14 @@
         <h3>Phone: {{project_profile.phone}}</h3>
         <h3>Rating: {{project_profile.rating}}</h3>
         <h3>Bio: {{project_profile.bio}}</h3> 
+        {% if request.user == project_profile.user %}
+        <section class="update-button">
+        <h4>
+            <a href="{% url 'update_profile'%}">Update profile</a>
+        </h4>
+        </section>
+        {% endif %}
     </section>
-
     <section class="items-section">
         <h3>Items Posted</h3>
         {% if items %}

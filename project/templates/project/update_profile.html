@@ -1,0 +1,33 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Update profile</h2>
+
+<form method="POST" class="update-profile">
+    {% csrf_token %}
+    <div>
+        <label id="city">City: </label>
+        {{ form.city }}
+    </div>
+    <div>
+        <label id="email">Email: </label>
+        {{ form.email }}
+    </div>
+    <div>
+        <label id="phone">Phone: </label>
+        {{ form.phone }}
+    </div>
+    <div>
+        <label id="image_file">Image file: </label>
+        {{ form.image_file }}
+    </div>
+    <div>
+        <label id="bio">Bio: </label>
+        {{ form.bio }}
+    </div>
+    <button type="submit">Update</button>
+</form>   
+<form action="{% url 'project_profile' profile.pk %}" class="back-button">
+    <input type="submit" name="Cancel" value="Cancel">
+</form>
+{% endblock %}

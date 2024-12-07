@@ -89,6 +89,9 @@ class Item(models.Model):
     post_date = models.DateTimeField(auto_now=True)
     sold = models.BooleanField(default=False)
 
+    def get_absolute_url(self):
+        return reverse('item', kwargs={'pk': self.pk})
+    
     def __str__(self):
         return f'{self.product}'
 

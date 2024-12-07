@@ -24,7 +24,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>You have not sold any items yet.</p>
+        <p style="text-align: center;">You have not sold any items yet.</p>
     {% endif %}
 </div>
 
@@ -34,9 +34,12 @@
         <ul>
             {% for transaction in transactions.bought_items %}
                 <li>
-                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px">
+                    <a href="{% url 'item' transaction.item.pk %}">
+                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px"></a>
                     <p><strong>Item:</strong> {{ transaction.item.title }}</p>
-                    <p><strong>Seller:</strong> {{ transaction.item.seller.first_name }} {{ transaction.item.seller.last_name }}</p>
+                    <p><strong>Seller:</strong> 
+                        <a href="{% url 'project_profile' transaction.item.seller.pk %}">{{ transaction.item.seller }}</a>
+                    </p>
                     <p><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</p>
 
                     <form method="post" action="{% url 'rate_transaction' transaction.pk %}">
@@ -49,7 +52,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>You have not bought any items yet.</p>
+        <p style="text-align: center;">You have not bought any items yet.</p>
     {% endif %}
 </div>
 {% endblock %}

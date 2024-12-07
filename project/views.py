@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import *
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -195,6 +195,7 @@ class RateTransactionView(View):
 
         # Redirect to the transaction history page
         return redirect('transaction_history')
+    
 class CompleteTransactionView(View):
     '''Complete a transaction for an item'''
     @method_decorator(login_required)
@@ -217,3 +218,52 @@ class CompleteTransactionView(View):
         redirect_url = request.POST.get('redirect_to', 'item_list')
         redirect_url = redirect_url.replace('pk=0', f'pk={transaction.pk}')
         return redirect(redirect_url)
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ['city', 'email', 'image_file', 'phone', 'bio'] 
+    template_name = 'project/update_profile.html'
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
+
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'UpdateProfileView.form_valid(): form={form.cleaned_data}')
+        print(f'UpdateProfileView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"UpdateProfileView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+
+class UpdateItemView(LoginRequiredMixin, UpdateView):
+    model = Item
+    fields = ['product', 'title', 'category', 'brand', 'description', 'condition', 'price', 'images'] 
+    template_name = 'project/update_item.html'
+
+    def get_login_url(self) -> str:
+        '''return the URL required for login'''
+        return reverse('login') 
+
+    def get_objects(self):
+        return Item.objects.get(user=self.request.user)
+
+    def form_valid(self, form):
+        '''This method is called after the form is validated, 
+        before saving data to the database.'''
+
+        print(f'UpdateProfileView.form_valid(): form={form.cleaned_data}')
+        print(f'UpdateProfileView.form_valid(): self.kwargs={self.kwargs}')
+
+        user = self.request.user
+        print(f"UpdateProfileView user={user} profile.user={user}")
+        form.instance.user = user
+        return super().form_valid(form)
+    

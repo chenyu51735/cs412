@@ -1,0 +1,41 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Update Item</h2>
+
+<form method="POST" class="update-profile">
+    {% csrf_token %}
+    <div>
+        <label id="title">Title: </label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label id="product">Product: </label>
+        {{ form.product }}
+    </div>
+    <div>
+        <label id="brand">Brand: </label>
+        {{ form.brand }}
+    </div>
+    <div>
+        <label id="category">Category: </label>
+        {{ form.category }}
+    </div>
+    <div>
+        <label id="condition">Condition: </label>
+        {{ form.condition }}
+    </div>
+    <div>
+        <label id="price">Price: </label>
+        {{ form.price }}
+    </div>
+    <div>
+        <label id="description">Description: </label>
+        {{ form.description }}
+    </div>
+    <button type="submit">Update</button>
+</form>   
+<form action="{% url 'item' item.pk %}" class="back-button">
+    <input type="submit" name="Cancel" value="Cancel">
+</form>
+{% endblock %}

@@ -11,24 +11,34 @@
     <p><strong>Category:</strong> {{ item.get_category_display }}</p>
     <p><strong>Condition:</strong> {{ item.get_condition_display }}</p>
     <p><strong>Price:</strong> ${{ item.price }}</p>
-    <p><strong>Posted by:</strong> {{ item.seller }}</p>
-    <p><strong>Description:</strong> {{ item.description|truncatewords:20 }}</p>
+    <p><strong>Posted by:</strong> 
+        <a href="{% url 'project_profile' item.seller.pk %}">{{ item.seller }}</a>
+    </p>
 </div>
 
 {% if user.is_authenticated %}
     {% if request.user.project_profile != item.seller %}
-        <form method="POST" action="{% url 'complete_transaction' item.pk %}">
-            {% csrf_token %}
-            <button type="submit">Buy Now</button>
-        </form>
-        <form method="POST" action="{% url 'add_to_wishlist' item.pk %}">
-            {% csrf_token %}
-            <button type="submit">Add to Wishlist</button>
-        </form>
+        {% if not item.sold %}
+            <form method="POST" action="{% url 'complete_transaction' item.pk %}">
+                {% csrf_token %}
+                <button type="submit">Buy Now</button>
+            </form>
+            <form method="POST" action="{% url 'add_to_wishlist' item.pk %}">
+                {% csrf_token %}
+                <button type="submit">Add to Wishlist</button>
+            </form>
+        {% else %}
+            <p style="text-align: center;"><strong>This item has been sold.</strong></p>
+        {% endif %}
         
     {% else %}
-        <p><strong>You cannot buy your own item.</strong></p>
+        <section class="update-button">
+        <h4>
+            <a href="{% url 'update_item' item.pk %}">Update item</a>
+        </h4>
+        </section>
     {% endif %}
+
 {% else %}
     <p><strong>You need to <a href="{% url 'login' %}">log in</a> to purchase this item.</strong></p>
 {% endif %}

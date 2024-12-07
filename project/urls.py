@@ -17,6 +17,7 @@ urlpatterns = [
     path('transactions/', views.TransactionHistoryView.as_view(), name='transaction_history'),
     path(r'create_profile', views.CreateProfileView.as_view(), name='create_profile'),
     path('transaction/rate/<int:pk>/', views.RateTransactionView.as_view(), name='rate_transaction'),
-
+    path(r'project_profile/update', views.UpdateProfileView.as_view(), name='update_profile'),  
+    path(r'item/<int:pk>/update', views.UpdateItemView.as_view(), name='update_item'),  
 
 ]
