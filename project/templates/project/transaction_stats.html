@@ -1,0 +1,13 @@
+{% extends 'project/base.html' %}
+{% block content %}
+
+<div class="graph">
+    <h4>Graphs</h4>
+    {{ sold_items_chart |safe }}
+</div>
+
+<div class="graph">
+    {{ price_time_chart |safe }}
+</div>
+
+{% endblock %}

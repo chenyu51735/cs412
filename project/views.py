@@ -12,9 +12,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.contrib.auth import login
+from plotly.offline import plot
+import plotly.graph_objects as go
+from typing import Any
+
 
 class ShowProfileView(DetailView):
-    '''the view to show profile'''
+    '''
+    the view to show profile.
+    '''
     model = Profile
     template_name = 'project/show_profile.html'
     context_object_name = 'project_profile' 
@@ -25,7 +31,9 @@ class ShowProfileView(DetailView):
         return context
     
 class ItemListView(ListView):
-    '''The view to show items'''
+    '''
+    The view to show items.
+    '''
     template_name = 'project/item_list.html'
     model = Item
     context_object_name = 'items'
@@ -67,14 +75,18 @@ class ItemListView(ListView):
         context['categories'] = Item.Category.choices
         return context
 class  ItemDetailView(DetailView):
-    '''the view to show detail if item'''
+    '''
+    the view to show detail if item.
+    '''
     model = Item
     template_name = 'project/item_detail.html'
     context_object_name = 'item'
 
 
 class WishlistView(ListView):
-    '''View to display user's wishlist'''
+    '''
+    View to display user's wishlist.
+    '''
     model = Wishlist
     template_name = 'project/wishlist.html'
     context_object_name = 'wishlist_items'
@@ -83,7 +95,9 @@ class WishlistView(ListView):
         return Wishlist.objects.filter(profile=self.request.user.project_profile)
 
 class AddToWishlistView(View):
-    '''Add item to user's wishlist'''
+    '''
+    Add item to user's wishlist
+    '''
     @method_decorator(login_required)
     def post(self, request, pk, *args, **kwargs):
         item = get_object_or_404(Item, pk=pk)
@@ -92,7 +106,9 @@ class AddToWishlistView(View):
         return redirect('wishlist')
 
 class RemoveFromWishlistView(View):
-    '''Remove item from user's wishlist'''
+    '''
+    Remove item from user's wishlist.
+    '''
     @method_decorator(login_required)
     def post(self, request, pk, *args, **kwargs):
         wishlist_item = get_object_or_404(Wishlist, pk=pk)
@@ -101,7 +117,9 @@ class RemoveFromWishlistView(View):
         return redirect('wishlist')
     
 class CompleteTransactionView(View):
-    '''Complete a transaction for an item'''
+    '''
+    Complete a transaction for an item.
+    '''
     @method_decorator(login_required)
     def post(self, request, pk, *args, **kwargs):
         item = get_object_or_404(Item, pk=pk)
@@ -113,7 +131,9 @@ class CompleteTransactionView(View):
         return redirect('item_list')
 
 class ItemCreateView(CreateView):
-    '''View to post a new item'''
+    '''
+    View to post a new item.
+    '''
     model = Item
     fields = ['title', 'product', 'description', 'brand', 'category', 'condition', 'price', 'images']
     template_name = 'project/item_form.html'
@@ -123,7 +143,9 @@ class ItemCreateView(CreateView):
         return super().form_valid(form)
     
 class TransactionHistoryView(LoginRequiredMixin, ListView):
-    """View to show items the user has sold and bought"""
+    """
+    View to show items the user has sold and bought.
+    """
     template_name = 'project/transaction_history.html'
     context_object_name = 'transactions'
 
@@ -137,7 +159,9 @@ class TransactionHistoryView(LoginRequiredMixin, ListView):
         }
     
 class CreateProfileView(CreateView):
-    '''the view to create profile'''
+    '''
+    the view to create profile.
+    '''
     model = Profile
     fields = ['first_name', 'last_name', 'city', 'email', 'image_file', 'bio']
     template_name = 'project/create_profile_form.html'
@@ -162,7 +186,9 @@ class CreateProfileView(CreateView):
             return self.render_to_response(self.get_context_data(form=form, user_creation_form=user_creation_form))
 
 class RateTransactionView(View):
-    '''View to handle rating a transaction'''
+    '''
+    View to handle rating a transaction.
+    '''
     def post(self, request, pk, *args, **kwargs):
         transaction = get_object_or_404(Transaction, pk=pk)
         profile = request.user.project_profile
@@ -197,7 +223,9 @@ class RateTransactionView(View):
         return redirect('transaction_history')
     
 class CompleteTransactionView(View):
-    '''Complete a transaction for an item'''
+    '''
+    Complete a transaction for an item.
+    '''
     @method_decorator(login_required)
     def post(self, request, pk, *args, **kwargs):
         item = get_object_or_404(Item, pk=pk)
@@ -225,15 +253,19 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'project/update_profile.html'
 
     def get_login_url(self) -> str:
-        '''return the URL required for login'''
+        '''
+        return the URL required for login.
+        '''
         return reverse('login') 
 
     def get_object(self):
         return Profile.objects.get(user=self.request.user)
 
     def form_valid(self, form):
-        '''This method is called after the form is validated, 
-        before saving data to the database.'''
+        '''
+        This method is called after the form is validated, 
+        before saving data to the database.
+        '''
 
         print(f'UpdateProfileView.form_valid(): form={form.cleaned_data}')
         print(f'UpdateProfileView.form_valid(): self.kwargs={self.kwargs}')
@@ -256,8 +288,10 @@ class UpdateItemView(LoginRequiredMixin, UpdateView):
         return Item.objects.get(user=self.request.user)
 
     def form_valid(self, form):
-        '''This method is called after the form is validated, 
-        before saving data to the database.'''
+        '''
+        This method is called after the form is validated, 
+        before saving data to the database.
+        '''
 
         print(f'UpdateProfileView.form_valid(): form={form.cleaned_data}')
         print(f'UpdateProfileView.form_valid(): self.kwargs={self.kwargs}')
@@ -266,4 +300,59 @@ class UpdateItemView(LoginRequiredMixin, UpdateView):
         print(f"UpdateProfileView user={user} profile.user={user}")
         form.instance.user = user
         return super().form_valid(form)
-    
+
+class TransactionStatsView(ListView):
+    model = Transaction
+    template_name = 'project/transaction_stats.html'
+    context_object_name = 'transaction'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        # get the superclass version of context
+        context = super().get_context_data(**kwargs)
+        
+        # Retrieve user's sold items
+        profile = self.request.user.project_profile
+        sold_items = Transaction.objects.filter(item__seller=profile).select_related('item').order_by('transaction_date')
+
+        total = sold_items.count()
+        context['total'] = total
+
+        # Count how many items the user sold per category
+        category_counts = {}
+        for t in sold_items:
+            category = t.item.get_category_display()
+            category_counts[category] = category_counts.get(category, 0) + 1
+
+        # Bar chart for sold items by category
+        fig = go.Figure(data=[go.Bar(
+            x=list(category_counts.keys()),
+            y=list(category_counts.values())
+        )])
+        fig.update_layout(
+            title=f'Distribution of Sold Items by Category (n={total})',
+            xaxis_title='Category',
+            yaxis_title='Number of Items Sold',
+            width=1000,
+            height=800
+        )
+        context['sold_items_chart'] = plot(fig, output_type='div')
+
+        # Distribution of price over transaction time
+        times = [t.transaction_date for t in sold_items if t.transaction_date is not None]
+        prices = [t.item.price for t in sold_items if t.transaction_date is not None]
+
+        fig_price_time = go.Figure(data=[go.Scatter(
+                x=times,
+                y=prices,
+                mode='markers',
+                marker=dict(color='rgba(222,45,38,0.8)', size=8),
+            )])
+        fig_price_time.update_layout(
+                title='Distribution of Item Prices Over Transaction Time',
+                xaxis_title='Transaction Time',
+                yaxis_title='Price',
+                width=1000,
+                height=800
+            )
+        context['price_time_chart'] = plot(fig_price_time, output_type='div')
+        return context

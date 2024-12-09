@@ -4,7 +4,7 @@
 <h2>Transaction History</h2>
 
 <div class="transaction-section">
-    <h3>Sold Items</h3>
+    <h3>Sold Items<a href="{% url 'graphs' %}">(See Stats)</a></h3>
     {% if transactions.sold_items %}
         <ul>
             {% for transaction in transactions.sold_items %}
