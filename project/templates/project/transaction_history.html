@@ -1,3 +1,6 @@
+<!-- project/templates/project/transaction_history.html 
+A template which shows the transaction history of an user
+ -->
 {% extends 'project/base.html' %}
 
 {% block content %}
@@ -8,10 +11,11 @@
     {% if transactions.sold_items %}
         <ul>
             {% for transaction in transactions.sold_items %}
-                <li>
-                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px">
-                    <p><strong>Item:</strong> {{ transaction.item.title }}</p>
-                    <p><strong>Buyer:</strong> {{ transaction.buyer.first_name }} {{ transaction.buyer.last_name }}</p>
+                <li>                    
+                    <a href="{% url 'item' transaction.item.pk %}">
+                    <img src="{{ transaction.item.images.url }}" alt="{{ transaction.item.title }}" width="100px"></a>
+                    <p><strong>Item:</strong> {{ transaction.item.title }} </p>
+                    <p><strong>Buyer:</strong><a href="{% url 'project_profile' transaction.buyer.pk %}">{{ transaction.buyer.first_name }} {{ transaction.buyer.last_name }}</a> </p>
                     <p><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</p>
 
                     <form method="post" action="{% url 'rate_transaction' transaction.pk %}">

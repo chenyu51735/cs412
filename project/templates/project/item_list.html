@@ -1,3 +1,6 @@
+<!-- project/templates/project/item_list.html 
+A template which will show all of available items
+ -->
 {% extends 'project/base.html' %}
 
 {% block content %}
@@ -25,11 +28,11 @@
     <button type="submit">Filter</button>
 </form>
 
-
+    <!-- Item List -->
 <div class="item-list">
     {% for item in items %}
         <div class="item-card">
-            <a href="{% url 'item' item.pk %}">
+            <a href="{% url 'item' item.pk %}?next=itemlist">
                 <img src="{{ item.images.url }}" alt="{{ item.title }}" class="item-image" width="200px" height="auto">
                 <h2>{{ item.title }}</h2>
                 <p><strong>Price:</strong> ${{ item.price }}</p>
@@ -40,7 +43,7 @@
         <p>No items match your search criteria.</p>
     {% endfor %}
 </div>
-
+    <!-- Pagination -->
 <div class="pagination">
     {% if is_paginated %}
         <span class="step-links">

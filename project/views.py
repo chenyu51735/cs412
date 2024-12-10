@@ -324,14 +324,12 @@ class TransactionStatsView(ListView):
             category_counts[category] = category_counts.get(category, 0) + 1
 
         # Bar chart for sold items by category
-        fig = go.Figure(data=[go.Bar(
-            x=list(category_counts.keys()),
-            y=list(category_counts.values())
+        fig = go.Figure(data=[go.Pie(
+            labels=list(category_counts.keys()),
+            values=list(category_counts.values()), 
         )])
         fig.update_layout(
             title=f'Distribution of Sold Items by Category (n={total})',
-            xaxis_title='Category',
-            yaxis_title='Number of Items Sold',
             width=1000,
             height=800
         )

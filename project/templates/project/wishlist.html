@@ -1,21 +1,26 @@
+<!-- project/templates/project/wishlist.html 
+A template which shows wishlist of an user
+ -->
 {% extends 'project/base.html' %}
 
 {% block content %}
 <h2>My Wishlist</h2>
-<ul>
+<div class="item-list">
     {% for item in wishlist_items %}
-        <li>
-            <img src="{{ item.item.images.url }}" alt="{{ item.item.title }}" width="100px">
-            {{ item.item.title }} - ${{ item.item.price }}
+    <div class="item-card">
+        <a href="{% url 'item' item.item.pk%}?next=wishlist">
+            <img src="{{ item.item.images.url }}" alt="{{ item.item.title }}"width="100px" height="auto">
+            <p>{{ item.item.title }} - ${{ item.item.price }}</p>
             <form method="POST" action="{% url 'remove_from_wishlist' item.pk %}">
                 {% csrf_token %}
                 <button type="submit">Remove</button>
             </form>
-        </li>
+        </a>
+        </div>
     {% empty %}
-        <p>No items in your wishlist.</p>
+        <p text-align: center>Your list is currently empty.</p>
     {% endfor %}
-</ul>
+</div>
 <form action="{% url 'item_list' %}" class="back-button">
     <input type="submit" name="Back" value="Back">
 </form>

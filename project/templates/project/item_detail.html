@@ -1,3 +1,6 @@
+<!-- project/templates/project/item_detail.html 
+A template which will show the details of an item
+ -->
 {% extends 'project/base.html' %}
 
 {% block content %}
@@ -11,6 +14,7 @@
     <p><strong>Category:</strong> {{ item.get_category_display }}</p>
     <p><strong>Condition:</strong> {{ item.get_condition_display }}</p>
     <p><strong>Price:</strong> ${{ item.price }}</p>
+    <p><strong>Description:</strong> {{ item.description }}</p>
     <p><strong>Posted by:</strong> 
         <a href="{% url 'project_profile' item.seller.pk %}">{{ item.seller }}</a>
     </p>
@@ -43,8 +47,18 @@
     <p><strong>You need to <a href="{% url 'login' %}">log in</a> to purchase this item.</strong></p>
 {% endif %}
 
-<form action="{% url 'item_list' %}" class="back-button">
-    <input type="submit" name="Back" value="Back">
-</form>
+{% if request.GET.next == "wishlist" %}
+    <form action="{% url 'wishlist' %}" class="back-button">
+        <input type="submit" name="Back" value="Back">
+    </form>
+{% elif request.GET.next == "itemlist" %}
+    <form action="{% url 'item_list' %}" class="back-button">
+        <input type="submit" name="Back" value="Back">
+    </form>
+{% else %}
+    <form action="{% url 'item_list' %}" class="back-button">
+        <input type="submit" name="Back" value="Back">
+    </form>
+{% endif %}
 
 {% endblock %}

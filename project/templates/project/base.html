@@ -1,3 +1,7 @@
+<!-- project/templates/project/base.html 
+ A template with common HTML code that will be re-used by 
+ all of the other templates.
+ -->
 {% load static %}
 <html>
     <head>
@@ -7,16 +11,15 @@
 
     <body>
         <nav class="nav-bar">
-
             {% if request.user.is_authenticated %}
-            <p>
-            {{request.user}} is logged in
-            </p>
             <li><a href="{% url 'item_list' %}">Home</a></li>
             <li><a href="{% url 'project_profile' request.user.project_profile.pk %}">My Profile</a></li>
             <li><a href="{% url 'wishlist' %}">My Wishlist</a></li>
             <li><a href="{% url 'new_item' %}">Post Item</a></li>
             <li><a href="{% url 'transaction_history' %}">My transaction</a></li>
+            <p>
+                {{request.user}} is logged in
+                </p>
             <li>
                 <form action="{% url 'logout' %}" method="POST" class="logout-button">
                     {% csrf_token %}
@@ -24,8 +27,9 @@
                 </form>
             </li>
             {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'item_list' %}">Home</a></li>
             <p>Not logged in</p>
+            <li><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
         </nav>
     {% block content %}
